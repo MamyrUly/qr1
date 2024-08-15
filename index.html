@@ -24,32 +24,26 @@
           return;
         }
 
-        // Пример строки данных для QR-кода, который будет содержать сумму и URL для оплаты.
-        // В реальной интеграции сюда будут добавлены данные из Kaspi Pay API.
-        // var paymentData = "https://kaspi.kz/pay?amount=" + amount;
         var paymen = `https://mamyruly.github.io/q2/?amount=${amount}`;
-        // Генерация QR-кода через внешний сервис.
-        // var qrCodeUrl =
-        //   "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
-        //   encodeURIComponent(paymen);
+
         var qrs =
           "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" +
           encodeURIComponent(paymen);
-        // Отображение QR-кода на странице.
+
         document.getElementById("qr-code").innerHTML =
           "<img src='" + qrs + "' alt='QR Code'>";
       }
 
-      function updateAfterPalyment(amount) {
+      function updateAfterPayment(amount) {
         document.getElementById(
           "qr-code"
-        ).innerHTML = `Оплата успешно произведена! Сумма: ${amount}`;
+        ).innerHTML = `Оплата успешно произведена! Сумма: ${amount} руб.`;
       }
 
       window.addEventListener("message", function (event) {
         if (event.origin === "https://mamyruly.github.io") {
           const amount = event.data.amount;
-          updateAfterPalyment(amount);
+          updateAfterPayment(amount);
         }
       });
     </script>
